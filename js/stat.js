@@ -4,9 +4,10 @@ const CLOUD_WIDTH = 420;
 const CLOUD_HEIGHT = 270;
 const CLOUD_X = 100;
 const CLOUD_Y = 10;
+const PADDING = 20;
+
 const FONT_HEIGTH = 16;
 const GAP = 10;
-const PADDING = 20;
 
 const BAR_WIDTH = 40;
 const BAR_GAP = 50;
@@ -31,7 +32,7 @@ function findMaxElement(arr) {
   return maxElement;
 }
 
-function renderSubText(ctx, textString, x, y) {
+function renderText(ctx, textString, x, y) {
   ctx.fillText(textString, x, y);
 }
 
@@ -47,13 +48,13 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.font = `16px PT Mono`;
   ctx.textBaseline = `hanging`;
 
-  ctx.fillText(`Ура вы победили!`, CLOUD_X + PADDING, CLOUD_Y + PADDING);
-  ctx.fillText(`Список результатов:`, CLOUD_X + PADDING, CLOUD_Y + PADDING + FONT_HEIGTH + GAP);
+  renderText(ctx, `Ура вы победили!`, CLOUD_X + PADDING, CLOUD_Y + PADDING);
+  renderText(ctx, `Список результатов:`, CLOUD_X + PADDING, CLOUD_Y + PADDING + FONT_HEIGTH + GAP);
 
   const maxTime = findMaxElement(times);
 
   names.forEach((name, index) => {
-    renderSubText(
+    renderText(
         ctx,
         name,
         CLOUD_X + PADDING + (BAR_WIDTH + BAR_GAP) * index,
@@ -78,7 +79,7 @@ window.renderStatistics = function (ctx, names, times) {
 
     ctx.fillStyle = `#000`;
     let timeRound = Math.round(time);
-    renderSubText(
+    renderText(
         ctx,
         timeRound,
         CLOUD_X + PADDING + (BAR_WIDTH + BAR_GAP) * index,
