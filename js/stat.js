@@ -40,7 +40,7 @@ function renderBar(ctx, x, y, barHeight) {
   ctx.fillRect(x, y, BAR_WIDTH, barHeight);
 }
 
-window.renderStatistics = function (ctx, names, times) {
+window.renderStatistics = (ctx, names, times) => {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, `rgba(0, 0, 0, 0.7)`);
   renderCloud(ctx, CLOUD_X, CLOUD_Y, `#ffffff`);
 
