@@ -69,6 +69,7 @@
 <div class="overlay setup hidden">
   <form class="setup-wizard-form"
         method="post"
+        action="https://javascript.pages.academy/code-and-magick"
         enctype="multipart/form-data"
         autocomplete="off">
 
@@ -80,7 +81,7 @@
         </div>
         <label>
           <input type="text" name="username"
-                 maxlength="25" required
+                 minlength="2" maxlength="25" required
                  class="setup-user-name" value="Синий Пендальф"/>
         </label>
       </div>
@@ -154,7 +155,7 @@
         <div class="setup-similar-list"><!--Список похожих персонажей--></div>
       </div>
 
-      <button class="button setup-submit">Сохранить</button>
+      <button class="button setup-submit" type="submit">Сохранить</button>
     </div>
   </form>
 </div>
