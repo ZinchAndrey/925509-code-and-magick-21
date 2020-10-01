@@ -40,6 +40,8 @@ const WIZARD_EYES = [
 
 const wizards = [];
 const setupNode = document.querySelector(`.setup`);
+const setupOpenButton = document.querySelector(`.setup-open`);
+const setupCloseButton = setupNode.querySelector(`.setup-close`);
 const similarListElementNode = setupNode.querySelector(`.setup-similar-list`);
 const setupSimilarNode = setupNode.querySelector(`.setup-similar`);
 const wizardTemplate = document.querySelector(`#similar-wizard-template`)
@@ -52,6 +54,8 @@ const fragment = document.createDocumentFragment();
 function getRandom(max) {
   return Math.floor(Math.random() * (max));
 }
+
+// ---рендер магов---
 
 function renderWizardsData(wizardsQuantity) {
   for (let i = 0; i < wizardsQuantity; i++) {
@@ -71,6 +75,26 @@ function renderWizard(wizard) {
   return wizardElement;
 }
 
+// ---обработчики событий---
+
+function onPopupEscPress(evt) {
+  if (evt.key === `Escape`) {
+    setupNode.classList.add(`hidden`);
+  }
+}
+
+function openPopup() {
+  setupNode.classList.remove(`hidden`);
+  document.addEventListener(`keydown`, onPopupEscPress);
+}
+
+function closePopup(evt) {
+  evt.preventDefault();
+  setupNode.classList.add(`hidden`);
+  document.removeEventListener(`keydown`, onPopupEscPress);
+}
+
+
 renderWizardsData(WIZARDS_QUANTITY);
 wizards.forEach((item) => {
   fragment.appendChild(renderWizard(item));
@@ -79,4 +103,7 @@ similarListElementNode.appendChild(fragment);
 
 setupNode.classList.remove(`hidden`);
 setupSimilarNode.classList.remove(`hidden`);
+
+setupOpenButton.addEventListener(`click`, openPopup);
+setupCloseButton.addEventListener(`click`, closePopup);
 

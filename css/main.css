@@ -773,9 +773,15 @@ input[type=radio]:checked + .review-mark-label
 .setup-close
 {
     font-size: 70px;
+    line-height: unset;
+    font-weight: normal;
+
+    background: none;
 
     top: 20px;
     right: 20px;
+    padding: 0;
+    margin: 0;
 
     float: right;
 
