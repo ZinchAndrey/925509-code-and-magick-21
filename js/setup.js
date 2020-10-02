@@ -53,11 +53,8 @@ const setupCloseButton = setupNode.querySelector(`.setup-close`);
 const userNameInput = setupNode.querySelector(`.setup-user-name`);
 const similarListElementNode = setupNode.querySelector(`.setup-similar-list`);
 const setupSimilarNode = setupNode.querySelector(`.setup-similar`);
+// const formNode = setupNode.querySelector(`.setup-wizard-form`);
 
-// const fireballNode = setupNode.querySelector(`.setup-fireball-wrap`);
-// const wizardNode = setupNode.querySelector(`.setup-wizard`);
-// const wizardEyesNode = wizardNode.querySelector(`.wizard-eyes`);
-// const wizardCoatNode = wizardNode.querySelector(`.wizard-coat`);
 
 const wizardTemplate = document.querySelector(`#similar-wizard-template`)
   .content
@@ -69,6 +66,11 @@ const Wizard = {
   eyes: setupNode.querySelector(`.wizard-eyes`),
   coat: setupNode.querySelector(`.wizard-coat`),
   fireball: setupNode.querySelector(`.setup-fireball-wrap`),
+  Input: {
+    eyes: setupNode.querySelector(`input[name="eyes-color"]`),
+    coat: setupNode.querySelector(`input[name="coat-color"]`),
+    fireball: setupNode.querySelector(`input[name="fireball-color"]`),
+  }
 };
 
 // случайное число в пределах [0; max)
@@ -134,14 +136,25 @@ function changeColor(element, colors) {
     element.style.fill = getRandomColor(colors);
   }
 }
+function changeInput(element, inputNode) {
+  if (element.tagName.toLowerCase() === `div`) {
+    inputNode.value = element.style.background;
+  } else {
+    inputNode.value = element.style.fill;
+  }
+}
+
 function changeCoatColor() {
   changeColor(Wizard.coat, WIZARD_COLORS);
+  changeInput(Wizard.coat, Wizard.Input.coat);
 }
 function changeEyesColor() {
   changeColor(Wizard.eyes, WIZARD_EYES);
+  changeInput(Wizard.eyes, Wizard.Input.eyes);
 }
 function changeFireballColor() {
   changeColor(Wizard.fireball, FIREBALL_COLORS);
+  changeInput(Wizard.fireball, Wizard.Input.fireball);
 }
 
 // ---валидация формы---
@@ -158,4 +171,3 @@ setupSimilarNode.classList.remove(`hidden`);
 
 setupOpenButton.addEventListener(`click`, openPopup);
 setupCloseButton.addEventListener(`click`, closePopup);
-
