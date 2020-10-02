@@ -54,16 +54,22 @@ const userNameInput = setupNode.querySelector(`.setup-user-name`);
 const similarListElementNode = setupNode.querySelector(`.setup-similar-list`);
 const setupSimilarNode = setupNode.querySelector(`.setup-similar`);
 
-const fireballNode = setupNode.querySelector(`.setup-fireball-wrap`);
-const wizardNode = setupNode.querySelector(`.setup-wizard`);
-const wizardEyesNode = wizardNode.querySelector(`.wizard-eyes`);
-const wizardCoatNode = wizardNode.querySelector(`.wizard-coat`);
+// const fireballNode = setupNode.querySelector(`.setup-fireball-wrap`);
+// const wizardNode = setupNode.querySelector(`.setup-wizard`);
+// const wizardEyesNode = wizardNode.querySelector(`.wizard-eyes`);
+// const wizardCoatNode = wizardNode.querySelector(`.wizard-coat`);
 
 const wizardTemplate = document.querySelector(`#similar-wizard-template`)
   .content
   .querySelector(`.setup-similar-item`);
 
 const fragment = document.createDocumentFragment();
+
+const Wizard = {
+  eyes: setupNode.querySelector(`.wizard-eyes`),
+  coat: setupNode.querySelector(`.wizard-coat`),
+  fireball: setupNode.querySelector(`.setup-fireball-wrap`),
+};
 
 // случайное число в пределах [0; max)
 function getRandom(max) {
@@ -95,17 +101,21 @@ function renderWizard(wizard) {
 function openPopup() {
   setupNode.classList.remove(`hidden`);
   document.addEventListener(`keydown`, onPopupEscPress);
-  setupNode.addEventListener(`click`, changeColor);
+  Wizard.coat.addEventListener(`click`, changeCoatColor);
+  Wizard.eyes.addEventListener(`click`, changeEyesColor);
+  Wizard.fireball.addEventListener(`click`, changeFireballColor);
 }
 
 function closePopup(evt) {
   evt.preventDefault();
   setupNode.classList.add(`hidden`);
   document.removeEventListener(`keydown`, onPopupEscPress);
-  setupNode.removeEventListener(`click`, changeColor);
+  Wizard.coat.removeEventListener(`click`, changeCoatColor);
+  Wizard.eyes.removeEventListener(`click`, changeEyesColor);
+  Wizard.fireball.removeEventListener(`click`, changeFireballColor);
 }
 
-function randomColor(colorsArray) {
+function getRandomColor(colorsArray) {
   return colorsArray[getRandom(colorsArray.length)];
 }
 
@@ -115,24 +125,24 @@ function onPopupEscPress(evt) {
   }
 }
 
-function changeColor(evt) {
-  if (evt.target === wizardCoatNode) {
-    evt.target.style.fill = randomColor(WIZARD_COLORS);
-  } else if (evt.target === wizardEyesNode) {
-    evt.target.style.fill = randomColor(WIZARD_EYES);
-  } else if (evt.target === fireballNode.querySelector(`.setup-fireball`)) {
-    fireballNode.style.background = randomColor(FIREBALL_COLORS);
+// ---изменение цветов---
+
+function changeColor(element, colors) {
+  if (element.tagName.toLowerCase() === `div`) {
+    element.style.background = getRandomColor(colors);
+  } else {
+    element.style.fill = getRandomColor(colors);
   }
 }
-
-// в скрытые инпуты надо записывать значение цвета
-// возможно создать объект с перечислениями
-// {
-//   coat: {
-//     node: ,
-//     colors: ,
-//   }
-// }
+function changeCoatColor() {
+  changeColor(Wizard.coat, WIZARD_COLORS);
+}
+function changeEyesColor() {
+  changeColor(Wizard.eyes, WIZARD_EYES);
+}
+function changeFireballColor() {
+  changeColor(Wizard.fireball, FIREBALL_COLORS);
+}
 
 // ---валидация формы---
 
@@ -148,3 +158,4 @@ setupSimilarNode.classList.remove(`hidden`);
 
 setupOpenButton.addEventListener(`click`, openPopup);
 setupCloseButton.addEventListener(`click`, closePopup);
+
